@@ -29,5 +29,24 @@ int _strlen(char *str)
 
 int _puts(char *str)
 {
-	return (write(1, str, _strlen(str)));
+	return (write(STDOUT_FILENO, str, _strlen(str)));
+}
+
+/**
+ * _strcpy - copies src into dst
+ *
+ * @dst: the destination string
+ * @src: the source string
+ *
+ * Return: a pointer on the new allocated string
+ */
+
+char *_strcpy(char *dst, const char *src)
+{
+	int i = 0;
+
+	while (src[i])
+		dst[i] = src[i++];
+	dst[i] = '\0';
+	return (dst);
 }
