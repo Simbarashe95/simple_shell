@@ -78,31 +78,111 @@ int	create_node(scrpt_lst **head, char **s, char d)
 	return (1);
 }
 
+int	count_delim(char *str)
+{
+	int	cnt = 0;
+	int	i = 0;
+
+	if (!str)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == ';')
+			++cnt;
+		else if (str[i] == '&' && str[i + 1] == '&')
+		{
+			++i;
+			++cnt;
+		}
+		else if (str[i] == '|' && str[i + 1] == '|')
+		{
+			++i;
+			++cnt;
+		}
+		++i;
+	}
+	return (cnt);
+}
+
+int	add_spaces(char **str)
+{
+	char	*new;
+	int	cdlm;
+	int	i, j;
+
+	cdlm = count_delim(*str);
+	new = malloc(_strlen(*str) + cdlm * 2 + 1);
+	if (!new)
+		return (-1);
+	i = 0;
+	j = 0;
+	while ((*str)[i])
+	{
+		if ((*str)[i] == ';')
+		{
+			new[j] = ' ';
+			++j;
+			new[j] = ';';
+			++j;
+			new[j] = ' ';
+		}
+		else if ((*str)[i] == '|' && (*str)[i + 1] == '|')
+		{
+			new[j] = ' ';
+			new[++j] = '|';
+			new[++j] = '|';
+			new[++j] = ' ';
+			++i;
+		}
+		else if ((*str)[i] == '&' && (*str)[i + 1] == '&')
+		{
+			new[j] = ' ';
+			new[++j] = '&';
+			new[++j] = '&';
+			new[++j] = ' ';
+			++i;
+		}
+		else
+		{
+			new[j] = (*str)[i];
+		}
+		++i;
+		++j;
+	}
+	new[j] = '\0';
+	// free(*str);
+	*str = new;
+	return (1);
+}
+
 int	create_list(char **str_init, size_t *n, scrpt_lst **head)
 {
-	char	*dlm[4] = { ";", "||", "&&", "\n"};
+	char	*dlm[3] = { ";", "||", "&&"};
 	char	**tok;
 	size_t	len;
 	int	i, j, k;
+	char	flag = '1';
 
+	if (add_spaces(str_init) == -1)
+		return (-1);
 	tok = strtoav(*str_init, " \n");
+	if (!tok)
+		return (-1);
 	i = 0;
 	k = 0;
 	while (tok[i])
 	{
-		printf("tok[%d] -> [%s]\n", i, tok[i]);
 		j = 0;
-		while (j < 4)
+		while (j < 3)
 		{
 			if (_strcmp(tok[i], dlm[j]) == 0)
 			{
 				free(tok[i]);
 				tok[i] = NULL;
-				printf("2 tok[%d] [%p] -> [%s]\n", i, tok + i, tok[i]);
-				create_node(head, tok + k, dlm[j][0]);
-				printf("3 tok[%d] [%p] -> [%s]\n", 0, tok, tok[0]);
+				if (create_node(head, tok + k, flag) != 1)
+					return (-1);
+				flag = dlm[j][0];
 				/* need to check for delim in a row right below */
-				printf("4 tok[%d] [%p] -> [%s]\n", 0, tok, tok[0]);
 				k = i + 1;
 				break;
 			}
@@ -111,9 +191,8 @@ int	create_list(char **str_init, size_t *n, scrpt_lst **head)
 		++i;
 	}
 	i = 0;
-	printf("4 tok[%d] [%p] -> [%s]\n", k, tok + k, tok[k]);
-	printf("out k = %d\n", k);
-	create_node(head, tok + k, '1');
+	if (create_node(head, tok + k, flag) != 1)
+		return (-1);
 	return (1);
 }
 
