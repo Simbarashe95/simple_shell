@@ -1,5 +1,16 @@
 #include "simpleshell.h"
 
+/**
+ * _realloc - reallocates a memory block
+ *
+ * @ptr: pointer to the memory previously allocated
+ * @old_size: the old size value in bytes of ptr
+ * @new_size: the new size value in bytes of ptr
+ *
+ * Return: a pointer to the newly allocated memory,
+ * or NULL if new_size = 0 and ptr != NULL, or on failure
+ */
+
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
 	char *new_ptr;
