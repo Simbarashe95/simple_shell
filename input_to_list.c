@@ -1,6 +1,36 @@
 #include "simpleshell.h"
 
 /**
+ * _strstr - a function that locates a substring
+ * @haystack: the string to search in
+ * @needle: the string to find
+ *
+ * Return: the position of needle in haystack or 0 if error or no match
+ *
+ **/
+char	*_strstr(char *haystack, char *needle)
+{
+	unsigned int	i;
+
+	if (!haystack)
+		return (0);
+	if (!needle || !*needle)
+		return (haystack);
+	while (*haystack)
+	{
+		i = 0;
+		while (haystack[i] == needle[i])
+		{
+			++i;
+			if (!needle[i])
+				return (haystack);
+		}
+		++haystack;
+	}
+	return (0);
+}
+
+/**
  * _strcmp - compare two strings
  * @s1: one string to compare
  * @s2: second string to compare
@@ -51,26 +81,16 @@ int	create_node(scrpt_lst **head, char **s, char d)
 int	create_list(char **str_init, size_t *n, scrpt_lst **head)
 {
 	char	*dlm[4] = { ";", "||", "&&", "\n"};
-	char	**sbuf;
 	char	**tok;
 	size_t	len;
-	int	i, j;
+	int	i, j, k;
 
 	tok = strtoav(*str_init, " \n");
-	
-	/* test \*\/
-	char **r;
-	r = tok;
-	while(*r)
-	{
-		printf("%s\n", *r);
-		++r;
-	}
-	\* end of test */
-	sbuf = tok;
 	i = 0;
+	k = 0;
 	while (tok[i])
 	{
+		printf("tok[%d] -> [%s]\n", i, tok[i]);
 		j = 0;
 		while (j < 4)
 		{
@@ -78,33 +98,22 @@ int	create_list(char **str_init, size_t *n, scrpt_lst **head)
 			{
 				free(tok[i]);
 				tok[i] = NULL;
-				create_node(head, sbuf, dlm[j][0]);
+				printf("2 tok[%d] [%p] -> [%s]\n", i, tok + i, tok[i]);
+				create_node(head, tok + k, dlm[j][0]);
+				printf("3 tok[%d] [%p] -> [%s]\n", 0, tok, tok[0]);
 				/* need to check for delim in a row right below */
-				*sbuf = tok[i + 1];
-				/* some test */
-				int k;
-				k = 0;
-				while (tok[i + 1 + k])
-				{
-					printf("HRER %s\n", tok[i+1+k]);
-					k++;
-				}
-				/* end of test */
+				printf("4 tok[%d] [%p] -> [%s]\n", 0, tok, tok[0]);
+				k = i + 1;
 				break;
 			}
-				++j;
+			++j;
 		}
 		++i;
 	}
 	i = 0;
-	while (1)
-	{
-		printf("tok[%d] : \"%s\"\n", i, tok[i]);
-		++i;
-	}
-
-	printf("out\n");
-	create_node(head, sbuf, '1');
+	printf("4 tok[%d] [%p] -> [%s]\n", k, tok + k, tok[k]);
+	printf("out k = %d\n", k);
+	create_node(head, tok + k, '1');
 	return (1);
 }
 
