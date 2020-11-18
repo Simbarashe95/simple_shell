@@ -1,38 +1,65 @@
 #include "simpleshell.h"
 
+/**
+ * main - entry point of our shell
+ */
+
 int main(int argc, char **argv, char **env)
 {
-	char *line;
-	int ret = 0;
+	data_t *data;
+	int fd;
 
-	while (1)
+	data = sh_data_new(argv, env);
+	if (argc > 1)
 	{
-		ret = sh_getline(&line);
-		if (ret == ERROR)
+		data->mode = FROMFILE;
+		fd = open(argv[1], O_RDONLY);
+		if (fd == -1)
 		{
-			continue ;
+			sh_data_delete(data);
+			return (EXIT_FAILURE);
 		}
-		if (ret == EOT)
-			exit(EXIT_SUCCESS);
-		printf("%s\n", line);
+		sh_start(data, fd);
 	}
-	free(line);
+	else
+	{
+		if (isatty(STDIN_FILENO))
+			data->mode = INTERACTIVE;
+		else
+			data->mode = NONINTERACTIVE;
+		sh_start(data, STDIN_FILENO);
+	}
+	sh_data_delete(data);
 	return (EXIT_SUCCESS);
 }
 
 /**
- * sh_getline - getline 
+ * sh_start - when the type of execution has been choosen, parses and executes
+ * commands
  *
+ * @data: the data_t structure
+ * @fd: the file descriptor to read
  *
+ * Return: EXIT_SUCCESS always because all errors should be treated
+ */
 
-int sh_getline(char **line)
+int sh_start(data_t *data, int fd)
 {
-	int buf_size = 1, pos = 0;
-	char c;
+	char *line = NULL;
+	int ret = 0;
 
-	*line = malloc(sizeof(char) * 1);
-	while ((ret = read(STDIN_FILENO, &c, 1)) > 0)
+	if (data->mode == INTERACTIVE)
+		_puts("$ > ");
+
+	while ((ret = sh_getline(&line, fd)) != EOF)
 	{
-		*(*line + pos++) = (c == '\n')
+		printf("%s\n", line);
+		if (data->mode == INTERACTIVE)
+			_puts("$ > ");
 	}
+	if (line)
+		free(line);
+	if (data->mode == FROMFILE)
+		close(fd);
+	return (EXIT_SUCCESS);
 }

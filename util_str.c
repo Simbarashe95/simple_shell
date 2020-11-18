@@ -33,20 +33,29 @@ int _puts(char *str)
 }
 
 /**
- * _strcpy - copies src into dst
+ * _strdup - allocates a new space in memory which contains
+ * a copy of the string given as a parameter
  *
- * @dst: the destination string
- * @src: the source string
+ * @str: the string to duplicate
  *
- * Return: a pointer on the new allocated string
+ * Return: a pointer to the new string, or NULL if str = NULL or fail
  */
 
-char *_strcpy(char *dst, const char *src)
+char *_strdup(char *str)
 {
+	char *new_str;
 	int i = 0;
 
-	while (src[i])
-		dst[i] = src[i++];
-	dst[i] = '\0';
-	return (dst);
+	if (str == NULL)
+		return (NULL);
+	new_str = malloc(sizeof(char) * _strlen(str) + 1);
+	if (!new_str)
+		return (NULL);
+	while (str[i])
+	{
+		new_str[i] = str[i];
+		i++;
+	}
+	new_str[i] = '\0';
+	return (new_str);
 }
