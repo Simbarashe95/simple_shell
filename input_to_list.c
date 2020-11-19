@@ -150,7 +150,7 @@ int	add_spaces(char **str)
 		++j;
 	}
 	new[j] = '\0';
-	free(*str);
+	free(*str); //stocker str
 	*str = new;
 	return (1);
 }
@@ -177,6 +177,8 @@ int	create_list(char **str_init, scrpt_lst **head)
 		{
 			if (_strcmp(tok[i], dlm[j]) == 0)
 			{
+				//printf("tok[%d] = [%s]\n", i , tok[i]); 
+				//printf("k = [%d] i + 1 = [%d]\n", k , i +1);
 				free(tok[i]);
 				tok[i] = NULL;
 				if (create_node(head, tok + k, flag) != 1)
