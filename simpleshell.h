@@ -11,7 +11,23 @@
 #define INTERACTIVE 0
 #define NONINTERACTIVE 1
 #define FROMFILE 2
-  
+
+typedef struct	cmd_lst_lst_s
+{
+		char			*list;
+		cmd_lst			**head;
+		struct cmd_lst_lst	*next;
+}					cmd_lst_lst;
+
+typedef struct			cmd_list_s
+{
+	char			*cmds;
+	char			**av;
+	int			exe;
+	char			flag;
+	struct cmd_lst_s	*next;
+}				cmd_lst;
+
 typedef struct	scrpt_lst_s
 {
 	char		**av;
