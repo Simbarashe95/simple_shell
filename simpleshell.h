@@ -53,7 +53,7 @@ int sh_start(data_t *data, int fd);
 
 /* SH_GETLINE  */
 int sh_getline(char **line, int fd);
-int _strchr(char c, char *str);
+const char	*_strchr(const char *str, char c);
 
 /* UTIL_DATA */
 data_t *sh_data_new(char **argv, char **env);

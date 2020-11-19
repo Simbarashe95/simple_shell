@@ -1,28 +1,6 @@
 #include "simpleshell.h"
 
 /**
- * _strchr - search for a character in a string and returns its index
- *
- * @c: the character to find
- * @str: the string to look inside
- *
- * Return: index of the first occurence of the character, else length of str
- */
-
-int _strchr(char c, char *str)
-{
-	int i = 0;
-
-	while (str[i])
-	{
-		if (str[i] == c)
-			return (i);
-		i++;
-	}
-	return (i);
-}
-
-/**
  * sh_getline - getline
  */
 

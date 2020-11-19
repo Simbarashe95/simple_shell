@@ -10,7 +10,7 @@ int main(int argc, char **argv, char **env)
 	int fd;
 
 	data = sh_data_new(argv, env);
-	if (argc > 1)
+	if (argc > 1) //im what cases ac == 2 ?
 	{
 		data->mode = FROMFILE;
 		fd = open(argv[1], O_RDONLY);
@@ -45,15 +45,31 @@ int main(int argc, char **argv, char **env)
 
 int sh_start(data_t *data, int fd)
 {
-	char *line = NULL;
-	int ret = 0;
+	scrpt_lst	*head = NULL;
+	char		*line = NULL;
+	int		ret = 0;
 
 	if (data->mode == INTERACTIVE)
 		_puts("$ > ");
 
 	while ((ret = sh_getline(&line, fd)) != EOF)
 	{
-		printf("%s\n", line);
+		create_list(&line, &head);
+		/* Print test */
+		int	i, j;
+		i = 0;
+		while(head)
+		{
+			j=0;
+			while(head->av[j])
+			{
+				printf("node (%i) string (%i): %s delim: %c\n", i, j, head->av[j], head->flag);
+				++j;
+			}
+			++i;
+			head = head->next;
+		}
+		/* end test */
 		if (data->mode == INTERACTIVE)
 			_puts("$ > ");
 	}
