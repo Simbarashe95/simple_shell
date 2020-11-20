@@ -11,14 +11,6 @@
 #define INTERACTIVE 0
 #define NONINTERACTIVE 1
 #define FROMFILE 2
-  
-typedef struct	scrpt_lst_s
-{
-	char		**av;
-	struct scrpt_lst_s	*next;
-	struct scrpt_lst_s	*prev;
-	char		flag;
-}	scrpt_lst;
 
 /**
  * struct buf_s - the buffer structure
@@ -53,7 +45,7 @@ int sh_start(data_t *data, int fd);
 
 /* SH_GETLINE  */
 int sh_getline(char **line, int fd);
-const char	*_strchr(const char *str, char c);
+const char *_strchr(const char *str, char c);	
 
 /* UTIL_DATA */
 data_t *sh_data_new(char **argv, char **env);
@@ -62,6 +54,7 @@ void *sh_data_delete(data_t *data);
 /* UTIL_ENV */
 char **sh_get_env(char **env);
 void sh_delete_env(char **env);
+char *sh_get_env_var(char *var, char **env);
 
 /* UTIL_MEM */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
@@ -70,6 +63,6 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 int _puts(char *str);
 int _strlen(char *str);
 char *_strdup(char *str);
-char	**strtoav(char *str, const char *delim);
+
 
 #endif /* SIMPLESHELL_H */
