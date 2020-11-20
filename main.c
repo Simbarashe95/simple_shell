@@ -45,7 +45,6 @@ int main(int argc, char **argv, char **env)
 
 int sh_start(data_t *data, int fd)
 {
-	scrpt_lst	*head = NULL;
 	char		*line = NULL;
 	int		ret = 0;
 
@@ -54,22 +53,30 @@ int sh_start(data_t *data, int fd)
 
 	while ((ret = sh_getline(&line, fd)) != EOF)
 	{
-		create_list(&line, &head);
-		/* Print test */
-		int	i, j;
-		i = 0;
-		while(head)
+		data->lines++;
+		parser(line, data);
+		expansion(data);
+
+		/* TESTS */
+		cmd_lst_t *node;
+		int i = 0, j = 0;;
+		while (llav_head)
 		{
-			j=0;
-			while(head->av[j])
+			printf("llav_node(%d): [%s]\n", i, llav_head->list);
+			node = (llav_head->head);
+			j = 0;
+			while (node)
 			{
-				printf("node (%i) string (%i): %s delim: %c\n", i, j, head->av[j], head->flag);
+				printf("node (%d) cmds: [%s] exe: [%d]\n", j, node->cmd, node->exe);
+				node = node->next;
 				++j;
 			}
+			llav_head = llav_head->next;
 			++i;
-			head = head->next;
 		}
-		/* end test */
+
+		/* END TESTS */
+
 		if (data->mode == INTERACTIVE)
 			_puts("$ > ");
 	}

@@ -19,7 +19,9 @@ data_t *sh_data_new(char **argv, char **env)
 		if (new)
 		{
 			new->env = sh_get_env(env);
+			new->lines = 0;
 			new->bash = _strdup(argv[0]);
+			new->llav_head = NULL;
 		}
 	}
 	return (new);

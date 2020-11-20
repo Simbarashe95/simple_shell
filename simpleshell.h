@@ -38,19 +38,6 @@ typedef struct	scrpt_lst_s
 }	scrpt_lst;
 
 /**
- * struct buf_s - the buffer structure
- *
- * @content: string content of the buffer
- * @index: the position of the index in the buffer
- */
-
-typedef struct buf_s
-{
-	char *content;
-	int index;
-} buf_t;
-
-/**
  * struct data_s - the data structure
  *
  * @env: environment
@@ -62,7 +49,9 @@ typedef struct data_s
 {
 	char **env;
 	int mode;
+	int lines;
 	char *bash;
+	cmd_lst_lst_t *llav_head;
 } data_t;
 
 /* MAIN */
