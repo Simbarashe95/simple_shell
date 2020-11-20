@@ -12,6 +12,31 @@
 #define NONINTERACTIVE 1
 #define FROMFILE 2
 
+typedef struct			cmd_lst_s
+{
+	char			*cmd;
+	char			**av;
+	int			exe;
+	char			flag;
+	struct cmd_lst_s	*next;
+	struct cmd_lst_s	*prev;
+}				cmd_lst_t;
+
+typedef struct	cmd_lst_lst_s
+{
+		char			*list;
+		cmd_lst_t		*head;
+		struct cmd_lst_lst_s	*next;
+}					cmd_lst_lst_t;
+
+typedef struct	scrpt_lst_s
+{
+	char		**av;
+	struct scrpt_lst_s	*next;
+	struct scrpt_lst_s	*prev;
+	char		flag;
+}	scrpt_lst;
+
 /**
  * struct buf_s - the buffer structure
  *
@@ -63,6 +88,5 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 int _puts(char *str);
 int _strlen(char *str);
 char *_strdup(char *str);
-
 
 #endif /* SIMPLESHELL_H */
