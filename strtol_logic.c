@@ -89,6 +89,8 @@ int	stralloc(char ***r, char *str, int i, size_t size)
 	buf = _strncpy(buf, str, i);
 	buf[i] = '\0';
 	*r = _realloc(*r, size * sizeof(void *), (size + 1) * sizeof(void *));
+	if (!(*r))
+		return (-1);
 	(*r)[size - 1] = buf;
 	return (1);
 }
@@ -118,14 +120,26 @@ char	**strsplit(char *str)
 	{
 		if ((str[i] == '|' && str[i + 1] == '|') || (str[i] == '&' && str[i + 1] == '&'))
 		{
-			stralloc(&r, str, i, size);
+			if (stralloc(&r, str, i, size) == -1)
+			{
+				while (size > 0)
+					free(r[--size]);
+				free(r);
+				return (0);
+			}
 			++size;
 			str += i + 2;
-			i = 0;
+			i = -1;
 		}
 		++i;
 	}
-	stralloc(&r, str, i, size);
+	if (stralloc(&r, str, i, size) == -1)
+	{
+		while (size > 0)
+			free(r[--size]);
+		free(r);
+		return (0);
+	}
 	++size;
 	r[size - 1] = NULL;
 	return (r);
@@ -145,4 +159,3 @@ int	main(int ac, char **av)
 	return (0);
 }
 */
-
