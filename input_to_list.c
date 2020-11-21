@@ -160,7 +160,7 @@ int	create_list(char **str_init, scrpt_lst **head)
 	char	*dlm[3] = { ";", "||", "&&"};
 	char	**tok;
 	int	i, j, k;
-	char	flag = '1';
+	char	flag = ';';
 
 	if (add_spaces(str_init) == -1)
 		return (-1);

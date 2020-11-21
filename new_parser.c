@@ -9,7 +9,7 @@ int	add_cmd_lst(char *cmd, cmd_lst_t **head)
 	if (!node)
 		return (-1);
 	node->cmd = cmd;
-	node->av = strtoav(cmd, " ");
+	node->av = strtoav(cmd, " \t");
 	node->exe = 0;
 	node->flag = '?';
 	node->next = NULL;
@@ -105,7 +105,7 @@ int	parser(char *input) //char * to char ****llav
 
 	/* tests */
 	cmd_lst_t	*node;
-	int i =0, j = 0;;
+	int i =0, j = 0;
 	while(llav_head)
 	{
 		printf("llav_node(%d): [%s]\n", i, llav_head->list);
@@ -113,7 +113,7 @@ int	parser(char *input) //char * to char ****llav
 		j = 0;
 		while (node)
 		{
-			printf("node (%d) cmds: [%s] exe: [%d]\n",j, node->cmd, node->exe);
+			printf("node (%d) cmds: [%s] av[0]: [%s] exe: [%d]\n",j, node->cmd, node->av[0], node->exe);
 			node = node->next;
 			++j;
 		}
