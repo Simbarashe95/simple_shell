@@ -45,7 +45,7 @@ int main(int argc, char **argv, char **env)
 
 int sh_start(data_t *data, int fd)
 {
-	scrpt_lst	*head = NULL;
+	cmd_lst_lst_t	*head = NULL;
 	char		*line = NULL;
 	int		ret = 0;
 
@@ -54,22 +54,9 @@ int sh_start(data_t *data, int fd)
 
 	while ((ret = sh_getline(&line, fd)) != EOF)
 	{
-		create_list(&line, &head);
-		/* Print test */
-		int	i, j;
-		i = 0;
-		while(head)
-		{
-			j=0;
-			while(head->av[j])
-			{
-				printf("node (%i) string (%i): %s delim: %c\n", i, j, head->av[j], head->flag);
-				++j;
-			}
-			++i;
-			head = head->next;
-		}
-		/* end test */
+		parser(line, &head);
+		//execute(data, &head);
+		//clean all
 		if (data->mode == INTERACTIVE)
 			_puts("$ > ");
 	}

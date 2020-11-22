@@ -28,6 +28,7 @@ char	*_memcpy(char *dest, char *src, unsigned int n)
  *
  * Return: a pointer to the newly allocated block or NULL
  **/
+/*
 void	*_realloc(void *ptr, unsigned int os, unsigned int ns)
 {
 	void	*r;
@@ -54,7 +55,7 @@ void	*_realloc(void *ptr, unsigned int os, unsigned int ns)
 	free(ptr);
 	return (r);
 }
-
+*/
 /**
  * _strncpy - copy n char of a source string to dest
  *@src: the source string
@@ -79,7 +80,7 @@ char	*_strncpy(char *dest, char *src, int n)
 	return (dest);
 }
 
-int	stralloc(char ***r, char *str, int i, size_t size)
+int	stralloc(char *str, int i, char flag, cmd_lst_lst_t *llav)
 {
 	char	*buf;
 
@@ -88,10 +89,7 @@ int	stralloc(char ***r, char *str, int i, size_t size)
 		return (-1);
 	buf = _strncpy(buf, str, i);
 	buf[i] = '\0';
-	*r = _realloc(*r, size * sizeof(void *), (size + 1) * sizeof(void *));
-	if (!(*r))
-		return (-1);
-	(*r)[size - 1] = buf;
+	add_cmd_lst(buf, &llav->head, flag);
 	return (1);
 }
 
@@ -102,12 +100,13 @@ int	stralloc(char ***r, char *str, int i, size_t size)
  *
  * Return: a newly allocated list of words found in str
  **/
-char	**strsplit(char *str)
+int	strsplit(cmd_lst_lst_t *llav, char *str)
 {
 	char	**r;
 	char	*buf;
 	int	i;
 	size_t	size;
+	char	flag = 0;
 
 	if (!str || !*str)
 		return (0);
@@ -120,20 +119,21 @@ char	**strsplit(char *str)
 	{
 		if ((str[i] == '|' && str[i + 1] == '|') || (str[i] == '&' && str[i + 1] == '&'))
 		{
-			if (stralloc(&r, str, i, size) == -1)
+			if (stralloc(str, i, flag, llav) == -1)
 			{
 				while (size > 0)
 					free(r[--size]);
 				free(r);
 				return (0);
 			}
+			flag = (str[i] == '|') ? '|' : '&';
 			++size;
 			str += i + 2;
 			i = -1;
 		}
 		++i;
 	}
-	if (stralloc(&r, str, i, size) == -1)
+	if (stralloc(str, i, flag, llav) == -1)
 	{
 		while (size > 0)
 			free(r[--size]);
@@ -142,7 +142,7 @@ char	**strsplit(char *str)
 	}
 	++size;
 	r[size - 1] = NULL;
-	return (r);
+	return (1);
 }
 
 /*

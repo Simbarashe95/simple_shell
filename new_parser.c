@@ -1,6 +1,6 @@
 #include "simpleshell.h"
 
-int	add_cmd_lst(char *cmd, cmd_lst_t **head)
+int	add_cmd_lst(char *cmd, cmd_lst_t **head, char flag)
 {
 	cmd_lst_t	*node;
 	cmd_lst_t	*buf = 0;
@@ -11,8 +11,9 @@ int	add_cmd_lst(char *cmd, cmd_lst_t **head)
 	node->cmd = cmd;
 	node->av = strtoav(cmd, " \t");
 	node->exe = 0;
-	node->flag = '?';
+	node->flag = flag;
 	node->next = NULL;
+	buf = *head;
 	if (buf)
 	{
 		while (buf->next)
@@ -63,13 +64,7 @@ int	parse_logic_op(cmd_lst_lst_t **llav_head) // create the list of char**av -> 
 	while (node)
 	{
 		list = node->list;
-		//list = strtok2(node->list, {"&&","||", 0});
-		i = 0;
-		//while (list[i])
-		{
-			add_cmd_lst(list, &(node->head));
-			++i;
-		}
+		strsplit(node, node->list);
 		node = node->next;
 	}
 	return (1);
@@ -92,37 +87,38 @@ int	parse_ctrl_op(char *input, cmd_lst_lst_t **head) // create the list of char 
 	return (1);
 }
 
-int	parser(char *input) //char * to char ****llav
+int	parser(char *input, cmd_lst_lst_t **llav_head)
 {
-	cmd_lst_lst_t	*llav_head;
-
-	llav_head = NULL;
-	printf("Input string: [%s]\n", input);
-	if (parse_ctrl_op(input, &llav_head) == -1)
+	if (parse_ctrl_op(input, llav_head) == -1)
 		return (-1);
-	if (parse_logic_op(&llav_head) == -1)
+	if (parse_logic_op(llav_head) == -1)
 		return (-1);
 
 	/* tests */
 	cmd_lst_t	*node;
+	cmd_lst_lst_t	*head;
 	int i =0, j = 0;
-	while(llav_head)
+	head = *llav_head;
+	while(head)
 	{
-		printf("llav_node(%d): [%s]\n", i, llav_head->list);
-		node = (llav_head->head);
+		printf("llav_node(%d): [%s]\n", i, head->list);
+		printf("llav_head->head: (%p)\n", head->head);
+		node = (head->head);
+		printf("NOPE\n");
 		j = 0;
 		while (node)
 		{
-			printf("node (%d) cmds: [%s] av[0]: [%s] exe: [%d]\n",j, node->cmd, node->av[0], node->exe);
+			printf("node (%d) cmds: [%s] av: [%p] flag: [%c]\n",j, node->cmd,node->av, node->flag);
 			node = node->next;
 			++j;
 		}
-		llav_head = llav_head->next;
+		head = (head->next);
 		++i;
 	}
+	/* end tests */
 	return (1);
 }
-
+/*
 int	main()
 {
 	char	*str;
@@ -135,4 +131,4 @@ int	main()
 		parser(str);
 	}
 }
-
+*/

@@ -29,13 +29,8 @@ typedef struct	cmd_lst_lst_s
 		struct cmd_lst_lst_s	*next;
 }					cmd_lst_lst_t;
 
-typedef struct	scrpt_lst_s
-{
-	char		**av;
-	struct scrpt_lst_s	*next;
-	struct scrpt_lst_s	*prev;
-	char		flag;
-}	scrpt_lst;
+int	add_cmd_lst(char *cmd, cmd_lst_t **head, char flag);
+int	strsplit(cmd_lst_lst_t *llav, char *str);
 
 /**
  * struct buf_s - the buffer structure
@@ -43,7 +38,6 @@ typedef struct	scrpt_lst_s
  * @content: string content of the buffer
  * @index: the position of the index in the buffer
  */
-
 typedef struct buf_s
 {
 	char *content;
@@ -87,6 +81,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 int _puts(char *str);
 int _strlen(char *str);
 char *_strdup(char *str);
+const char	*_strchr(const char *s, char c);
 char	**strtoav(char *str, const char *delim);
 
 #endif /* SIMPLESHELL_H */
