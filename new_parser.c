@@ -8,8 +8,10 @@ int	add_cmd_lst(char *cmd, cmd_lst_t **head, char flag)
 	node = (cmd_lst_t *)malloc(sizeof(cmd_lst_t));
 	if (!node)
 		return (-1);
+	printf("In add_cmd_lst cmd = [%s]\n", cmd);
 	node->cmd = cmd;
 	node->av = strtoav(cmd, " \t");
+	printf("In add_cmd_lst av[0] = [%s]\n", node->av[0]);
 	node->exe = 0;
 	node->flag = flag;
 	node->next = NULL;
@@ -37,6 +39,7 @@ int	add_cmd_lst_lst(char *list, cmd_lst_lst_t **head)
 	node = (cmd_lst_lst_t *)malloc(sizeof(cmd_lst_lst_t));
 	if (!node)
 		return (-1);
+	printf("In add_cmd_lst_lst list = [%s]\n", list);
 	node->list = list;
 	node->head = NULL;
 	node->next = NULL;
@@ -58,11 +61,13 @@ int	parse_logic_op(cmd_lst_lst_t **llav_head) // create the list of char**av -> 
 	char		*list;
 	int		i;
 
+	printf("llav_head (%p) *(%p)\n", llav_head, *llav_head);
 	if (!llav_head)
 		return (-1);
 	node = *llav_head;
 	while (node)
 	{
+		printf("In parse_logic loop\n");
 		list = node->list;
 		strsplit(node, node->list);
 		node = node->next;
@@ -89,12 +94,14 @@ int	parse_ctrl_op(char *input, cmd_lst_lst_t **head) // create the list of char 
 
 int	parser(char *input, cmd_lst_lst_t **llav_head)
 {
+	if (!input)
+		return (-1);
 	if (parse_ctrl_op(input, llav_head) == -1)
 		return (-1);
 	if (parse_logic_op(llav_head) == -1)
 		return (-1);
 
-	/* tests */
+	/* tests*/ 
 	cmd_lst_t	*node;
 	cmd_lst_lst_t	*head;
 	int i =0, j = 0;
@@ -115,7 +122,7 @@ int	parser(char *input, cmd_lst_lst_t **llav_head)
 		head = (head->next);
 		++i;
 	}
-	/* end tests */
+	 /*end tests */
 	return (1);
 }
 /*

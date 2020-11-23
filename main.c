@@ -54,9 +54,12 @@ int sh_start(data_t *data, int fd)
 
 	while ((ret = sh_getline(&line, fd)) != EOF)
 	{
-		parser(line, &head);
-		//execute(data, &head);
-		//clean all
+		printf("line at sh_start = [%s]\n", line);
+		if (parser(line, &head) != -1)
+		{
+			execute(data, &head);
+			//free_all(&head);
+		}
 		if (data->mode == INTERACTIVE)
 			_puts("$ > ");
 	}

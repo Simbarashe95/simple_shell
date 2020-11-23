@@ -83,5 +83,12 @@ int _strlen(char *str);
 char *_strdup(char *str);
 const char	*_strchr(const char *s, char c);
 char	**strtoav(char *str, const char *delim);
+int	_strcmp(char *s1, char *s2);
+
+/* FREE_LISTS */
+int	free_av(char **av);
+void	free_cmd_lst(cmd_lst_t *node);
+void	free_cmd_lst_lst(cmd_lst_lst_t *llav);
+int	free_all(cmd_lst_lst_t **head);
 
 #endif /* SIMPLESHELL_H */
