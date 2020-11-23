@@ -114,7 +114,7 @@ char *c_concat(char *s, char c)
 	char *str;
 	int i = 0;
 
-	str = malloc(sizeof(char) * (_strlen(s) + 1));
+	str = malloc(sizeof(char) * (_strlen(s) + 2));
 	if (!str)
 		return (NULL);
 	if (s)

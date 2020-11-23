@@ -82,4 +82,6 @@ char *_strndup(char *str, int n);
 char *str_concat(char *s1, char *s2);
 char *c_concat(char *s, char c);
 
+void expansion_path(char **arg, char *path_var);
+
 #endif /* SIMPLESHELL_H */

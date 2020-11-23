@@ -134,7 +134,6 @@ void expansion_var_alias(char **av, data_t *data)
 				j++;
 			}
 		}
-		printf("i = %d\n", i);
 		av[i] = _strdup(new);
 		free(new);
 		new = NULL;

@@ -22,6 +22,7 @@ int expansion(data_t *data)
 		while (node)
 		{
 			expansion_var_alias(node->av, data);
+			expansion_path(&node->av[0], sh_get_env_var("PATH", data->env));
 			printf("node (%d) cmds: [%s] exe: [%d]\n", j, node->cmd, node->exe);
 			node = node->next;
 			++j;
