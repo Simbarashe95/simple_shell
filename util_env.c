@@ -52,6 +52,7 @@ void sh_delete_env(char **env)
  * sh_get_env_var - get the environment variable
  *
  * @var: the name of the variable to get
+ * @env: the environment variable
  *
  * Return: the value of the environment variable
  */
@@ -61,7 +62,7 @@ char *sh_get_env_var(char *var, char **env)
 	int i = 0, j;
 	char *val = NULL;
 
-	while(env[i])
+	while (env[i])
 	{
 		j = 0;
 		while (env[i][j] == var[j] && var[j])

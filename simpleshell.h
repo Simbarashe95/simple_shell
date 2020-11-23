@@ -48,6 +48,7 @@ typedef struct	scrpt_lst_s
 typedef struct data_s
 {
 	char **env;
+	char **alias;
 	int mode;
 	int lines;
 	char *bash;
@@ -77,5 +78,8 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 int _puts(char *str);
 int _strlen(char *str);
 char *_strdup(char *str);
+char *_strndup(char *str, int n);
+char *str_concat(char *s1, char *s2);
+char *c_concat(char *s, char c);
 
 #endif /* SIMPLESHELL_H */
