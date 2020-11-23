@@ -85,7 +85,7 @@ char *expansion_alias(char *var, char **als)
 	int len = _strlen(var), i = 0;
 	char *new = NULL;
 
-	while (als[i])
+	while (als && als[i])
 	{
 		if (_strncmp(als[i], var, len) == 0)
 		{
