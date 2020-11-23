@@ -27,6 +27,12 @@ char **sh_get_env(char **env)
 	return (new_env);
 }
 
+/**
+ * sh_delet_env - deletes the env array
+ *
+ * @env: the env array
+ */
+
 void sh_delete_env(char **env)
 {
 	int i = 0;
@@ -40,4 +46,33 @@ void sh_delete_env(char **env)
 		}
 		free(env);
 	}
+}
+
+/**
+ * sh_get_env_var - get the environment variable
+ *
+ * @var: the name of the variable to get
+ * @env: the environment variable
+ *
+ * Return: the value of the environment variable
+ */
+
+char *sh_get_env_var(char *var, char **env)
+{
+	int i = 0, j;
+	char *val = NULL;
+
+	while (env[i])
+	{
+		j = 0;
+		while (env[i][j] == var[j] && var[j])
+			j++;
+		if (env[i][j] == '=' && var[j] == '\0')
+		{
+			val = _strdup(env[i] + j + 1);
+			break;
+		}
+		i++;
+	}
+	return (val);
 }

@@ -57,9 +57,31 @@ int sh_start(data_t *data, int fd)
 		printf("line at sh_start = [%s]\n", line);
 		if (parser(line, &head) != -1)
 		{
+			expansion(data);
 			execute(data, &head);
 			//free_all(&head);
 		}
+		data->lines++;
+
+		/* TESTS */
+		cmd_lst_t *node;
+		int i = 0, j = 0;;
+		while (llav_head)
+		{
+			printf("llav_node(%d): [%s]\n", i, llav_head->list);
+			node = (llav_head->head);
+			j = 0;
+			while (node)
+			{
+				printf("node (%d) cmds: [%s] exe: [%d]\n", j, node->cmd, node->exe);
+				node = node->next;
+				++j;
+			}
+			llav_head = llav_head->next;
+			++i;
+		}
+
+		/* END TESTS */
 		if (data->mode == INTERACTIVE)
 			_puts("$ > ");
 	}
