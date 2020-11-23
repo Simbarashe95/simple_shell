@@ -30,5 +30,6 @@ int expansion(data_t *data)
 		llav_head = llav_head->next;
 		++i;
 	}
+	return (0);
 }
 
