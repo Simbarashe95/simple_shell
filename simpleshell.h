@@ -29,13 +29,8 @@ typedef struct	cmd_lst_lst_s
 		struct cmd_lst_lst_s	*next;
 }					cmd_lst_lst_t;
 
-typedef struct	scrpt_lst_s
-{
-	char		**av;
-	struct scrpt_lst_s	*next;
-	struct scrpt_lst_s	*prev;
-	char		flag;
-}	scrpt_lst;
+int	add_cmd_lst(char *cmd, cmd_lst_t **head, char flag);
+int	strsplit(cmd_lst_lst_t *llav, char *str);
 
 /**
  * struct data_s - the data structure
@@ -78,9 +73,18 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 int _puts(char *str);
 int _strlen(char *str);
 char *_strdup(char *str);
+const char	*_strchr(const char *s, char c);
+char	**strtoav(char *str, const char *delim);
+int	_strcmp(char *s1, char *s2);
 char *_strndup(char *str, int n);
 char *str_concat(char *s1, char *s2);
 char *c_concat(char *s, char c);
+
+/* FREE_LISTS */
+int	free_av(char **av);
+void	free_cmd_lst(cmd_lst_t *node);
+void	free_cmd_lst_lst(cmd_lst_lst_t *llav);
+int	free_all(cmd_lst_lst_t **head);
 
 void expansion_path(char **arg, char *path_var);
 

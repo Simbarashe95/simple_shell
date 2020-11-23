@@ -45,6 +45,7 @@ int main(int argc, char **argv, char **env)
 
 int sh_start(data_t *data, int fd)
 {
+	cmd_lst_lst_t	*head = NULL;
 	char		*line = NULL;
 	int		ret = 0;
 
@@ -53,11 +54,17 @@ int sh_start(data_t *data, int fd)
 
 	while ((ret = sh_getline(&line, fd)) != EOF)
 	{
+		printf("line at sh_start = [%s]\n", line);
+		if (parser(line, &head) != -1)
+		{
+			data->llav_head = head;
+			expansion(data);
+			execute(data, &head);
+			//free_all(&head);
+		}
 		data->lines++;
-		parser(line, data);
-		expansion(data);
 
-		/* TESTS */
+		/* TESTS 
 		cmd_lst_t *node;
 		int i = 0, j = 0;;
 		while (llav_head)
@@ -75,8 +82,7 @@ int sh_start(data_t *data, int fd)
 			++i;
 		}
 
-		/* END TESTS */
-
+		END TESTS */
 		if (data->mode == INTERACTIVE)
 			_puts("$ > ");
 	}
