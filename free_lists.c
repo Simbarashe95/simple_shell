@@ -11,8 +11,8 @@ int	free_av(char **av)
 		free(av[i]);
 		++i;
 	}
+	free(av[i]);
 	free(av);
-	av = NULL;
 	return (1);
 }
 
@@ -21,42 +21,44 @@ void	free_cmd_lst(cmd_lst_t *node)
 	if (node)
 	{
 		free_av(node->av);
-		node->av = NULL;
 		free(node->cmd);
-		node->cmd = NULL;
+		free(node);
 	}
 }
 
 void	free_cmd_lst_lst(cmd_lst_lst_t *llav)
 {
 	cmd_lst_t	*node;
+	cmd_lst_t	*buf;
 
 	if (llav)
 	{
 		node = llav->head;
 		while (node)
 		{
-			free_cmd_lst(node);
+			buf = node;
 			node = node->next;
+			free_cmd_lst(buf);
 		}
 		free(llav->list);
-		llav->list = NULL;
+		free(llav);
 	}
 }
 
 int	free_all(cmd_lst_lst_t **head)
 {
 	cmd_lst_lst_t	*llav;
-	cmd_lst_t	*node;
+	cmd_lst_lst_t	*buf;
 
 	if (!head)
 		return (-1);
 	llav = *head;
 	while (llav)
 	{
-		free_cmd_lst_lst(llav);
+		buf = llav;
 		llav = llav->next;
+		free_cmd_lst_lst(buf);
 	}
-	head = NULL;
+	*head = NULL;
 	return (1);
 }

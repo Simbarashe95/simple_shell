@@ -29,33 +29,33 @@ char	*_memcpy(char *dest, char *src, unsigned int n)
  * Return: a pointer to the newly allocated block or NULL
  **/
 /*
-void	*_realloc(void *ptr, unsigned int os, unsigned int ns)
-{
-	void	*r;
+   void	*_realloc(void *ptr, unsigned int os, unsigned int ns)
+   {
+   void	*r;
 
-	if (!ptr)
-	{
-		r = malloc(ns);
-		return (r ? r : 0);
-	}
-	if (os == ns)
-		return (ptr);
-	if (!ns)
-	{
-		free(ptr);
-		return (0);
-	}
-	r = malloc(ns);
-	if (!r)
-		return (0);
-	if (ns < os)
-		_memcpy(r, ptr, ns);
-	else
-		_memcpy(r, ptr, os);
-	free(ptr);
-	return (r);
-}
-*/
+   if (!ptr)
+   {
+   r = malloc(ns);
+   return (r ? r : 0);
+   }
+   if (os == ns)
+   return (ptr);
+   if (!ns)
+   {
+   free(ptr);
+   return (0);
+   }
+   r = malloc(ns);
+   if (!r)
+   return (0);
+   if (ns < os)
+   _memcpy(r, ptr, ns);
+   else
+   _memcpy(r, ptr, os);
+   free(ptr);
+   return (r);
+   }
+ */
 /**
  * _strncpy - copy n char of a source string to dest
  *@src: the source string
@@ -126,10 +126,13 @@ int	strsplit(cmd_lst_lst_t *llav, char *str)
 				free(r);
 				return (0);
 			}
-			flag = (str[i] == '|') ? '|' : '&';
-			++size;
-			str += i + 2;
-			i = -1;
+			else
+			{
+				flag = (str[i] == '|') ? '|' : '&';
+				++size;
+				str += i + 2;
+				i = -1;
+			}
 		}
 		++i;
 	}
@@ -140,22 +143,23 @@ int	strsplit(cmd_lst_lst_t *llav, char *str)
 		free(r);
 		return (0);
 	}
-	++size;
+	else
+		++size;
 	r[size - 1] = NULL;
 	return (1);
 }
 
 /*
-int	main(int ac, char **av)
-{
-	char	**r;
+   int	main(int ac, char **av)
+   {
+   char	**r;
 
-	r = strsplit(av[1]);
-	while (*r)
-	{
-		printf("%s\n", *r);
-		++r;
-	}
-	return (0);
-}
-*/
+   r = strsplit(av[1]);
+   while (*r)
+   {
+   printf("%s\n", *r);
+   ++r;
+   }
+   return (0);
+   }
+ */
