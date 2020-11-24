@@ -27,26 +27,22 @@ void expansion_path(char **arg, char *path_var)
 			free(bin_path);
 		else
 		{
+			/* i++;
 			while (path && path[i])
-			{
-				free(path[i]);
-				i++;
-			}
+				free(path[i++]);
+			if (path)
+				free(path); */
 			if (stats.st_mode & S_IFREG)
 			{
 				if (stats.st_mode & S_IXUSR)
 				{
-
 					tmp = NULL;
-					
 					*arg = _strdup(bin_path);
 					free(bin_path);
 					return ;
 				}
 				else
-				{
 					printf("HANDLE PERMISSION ERROR\n");
-				}
 			}
 		}
 		i++;

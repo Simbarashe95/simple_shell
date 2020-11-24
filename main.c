@@ -10,6 +10,12 @@ int main(int argc, char **argv, char **env)
 	int fd;
 
 	data = sh_data_new(argv, env);
+
+	/* START TESTS */
+	char *als[] = {"coucou=/bin/ls", "test=yeah", "bonjour=tutu", "foo=bar"};
+	data->alias = sh_get_env(als);
+	/* END TESTS */
+
 	if (argc > 1) //im what cases ac == 2 ?
 	{
 		data->mode = FROMFILE;
@@ -82,7 +88,7 @@ int sh_start(data_t *data, int fd)
 		{
 			printf("Parser passed\n");
 			data->llav_head = head;
-			//expansion(data, &head);
+			expansion(data, &head);
 			printf("Expansion passed\n");
 			execute(data, &head);
 			printf("Execute passed\n");
