@@ -46,6 +46,8 @@ int	execute(data_t *data, cmd_lst_lst_t **head)
 		node = llav_node->head;
 		while (node)
 		{
+			if (!node->av[0])
+				return (-1);
 			//printf("av[0] = [%s]\n", node->av[0]);
 			if (_strchr(node->av[0], '/'))
 			{
