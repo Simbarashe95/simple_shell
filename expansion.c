@@ -8,9 +8,9 @@
  * Return: an int
  */
 
-int expansion(data_t *data)
+int expansion(data_t *data, cmd_lst_lst_t **head)
 {
-	cmd_lst_lst_t   *llav_head = data->llav_head;
+	cmd_lst_lst_t   *llav_head = *head;
 	cmd_lst_t *node;
 	int i = 0, j = 0;
 
