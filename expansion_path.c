@@ -11,8 +11,14 @@ void expansion_path(char **arg, char *path_var)
 {
 	char **path = NULL;
 	int i = 0;
-	char *bin_path = NULL, *tmp = NULL;
+	char *bin_path = NULL, *tmp = _strdup(*arg);
 	struct stat stats;
+
+	if (is_builtin(tmp))
+	{
+		free(tmp);
+		return ;
+	}
 
 	path = strtoav(path_var, ":");
 	while (path && path[i])

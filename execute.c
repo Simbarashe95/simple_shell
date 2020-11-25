@@ -1,20 +1,37 @@
 #include "simpleshell.h"
 
+int	is_builtin(char *arg)
+{
+	char	*names[] = {"cd", "env", "exit", NULL};
+	int	i = 0;
+
+	while (names[i])
+	{
+		if (!_strcmp(names[i], arg))
+		{
+			return (1);
+		}
+		++i;
+	}
+	return (0);
+}
+
 int	do_builtin(data_t *data, cmd_lst_t *node)
 {
-	char	*names[] = {"cd", NULL};
-	int	(*func_p[])() = {};
+	char	*names[] = {"cd", "env", "exit", NULL};
+	int	(*func_p[])(data_t *data) = {NULL, bi_env, bi_exit};
 	int	i = 0;
 
 	while (names[i])
 	{
 		if (!_strcmp(names[i], node->av[0]))
-			func_p[i]();
-		else
-			return (-1);
+		{
+			func_p[i](data);
+			return (0);
+		}
 		++i;
 	}
-	return (0);
+	return (-1);
 }
 
 int	do_execve(data_t *data, cmd_lst_t *node)
@@ -48,7 +65,7 @@ int	execute(data_t *data, cmd_lst_lst_t **head)
 		{
 			if (!node->av[0])
 				return (-1);
-			//printf("av[0] = [%s]\n", node->av[0]);
+			printf("av[0] = [%s]\n", node->av[0]);
 			if (_strchr(node->av[0], '/'))
 			{
 				if (!(node->flag) || (node->flag == '&' && node->prev && node->prev->exe == 1) || (node->flag == '|' && node->prev && node->prev->exe == 0))
