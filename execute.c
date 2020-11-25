@@ -37,7 +37,8 @@ int	do_builtin(data_t *data, cmd_lst_t *node)
 {
 	char	*names[] = {"env", "exit", NULL};
 	int	i = 0;
-	int	(*func_p[])(data_t*) = {bi_env, bi_exit, NULL};
+
+	int	(*func_p[])(data_t *) = {bi_env, bi_exit, NULL};
 
 	while (names[i])
 	{

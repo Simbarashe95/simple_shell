@@ -59,12 +59,17 @@ int	strsplit(cmd_lst_lst_t *llav, char *str);
  * @env: environment
  * @mode: interactive, non interactive or from file
  * @bash: the argv[0]
+ * @alias: the aliases
+ * @line: the address of the getline line
+ * @lines: index of the executed line
+ * @llav_head: the head of the llav linked list
  */
 
 typedef struct data_s
 {
 	char **env;
 	char **alias;
+	char **line;
 	int mode;
 	int lines;
 	char *bash;

@@ -44,6 +44,8 @@ void *sh_data_delete(data_t *data)
 			sh_delete_env(data->env);
 		if (data->bash)
 			free(data->bash);
+		if (*data->line)
+			free(*data->line);
 		free(data);
 	}
 	return (NULL);

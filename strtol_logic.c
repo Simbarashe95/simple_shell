@@ -78,15 +78,15 @@ int	strsplit(cmd_lst_lst_t *llav, char *s)
 	{
 		if ((s[i] == '|' && s[i + 1] == '|') || (s[i] == '&' && s[i + 1] == '&'))
 		{
-			if (stralloc(s, i, flag, llav) == -1)
-				return (0);
-			else
+			if (stralloc(s, i, flag, llav) == 1)
 			{
 				flag = (s[i] == '|') ? '|' : '&';
 				++size;
 				s += i + 2;
 				i = -1;
 			}
+			else
+				return (0);
 		}
 		++i;
 	}

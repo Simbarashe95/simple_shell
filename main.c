@@ -68,6 +68,7 @@ int sh_start(data_t *data, int fd)
 	if (data->mode == INTERACTIVE)
 		_puts("$ > ");
 
+	data->line = &line;
 	signal(SIGINT, stop_signal_handler);
 	while ((ret = sh_getline(&line, fd)) != EOF)
 	{
@@ -79,7 +80,7 @@ int sh_start(data_t *data, int fd)
 			free_all(&head);
 		}
 		data->lines++;
-
+		free(line);
 		if (data->mode == INTERACTIVE)
 			_puts("$ > ");
 	}
