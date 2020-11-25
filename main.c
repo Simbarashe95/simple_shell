@@ -39,6 +39,12 @@ int main(int argc, char **argv, char **env)
 	return (EXIT_SUCCESS);
 }
 
+void stop_signal_handler(int signum)
+{
+	(void)signum;
+	_puts("\n$ > ");
+}
+
 /**
  * sh_start - when the type of execution has been choosen, parses and executes
  * commands
@@ -58,6 +64,7 @@ int sh_start(data_t *data, int fd)
 	if (data->mode == INTERACTIVE)
 		_puts("$ > ");
 
+	signal(SIGINT, stop_signal_handler);
 	while ((ret = sh_getline(&line, fd)) != EOF)
 	{
 		printf("line at sh_start = [%s]\n", line);
@@ -104,5 +111,7 @@ int sh_start(data_t *data, int fd)
 		free(line);
 	if (data->mode == FROMFILE)
 		close(fd);
+	_puts("See you soon <3\n");
 	return (EXIT_SUCCESS);
 }
+

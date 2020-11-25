@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include <signal.h>
 
 #define BUFSIZE 1024
 
@@ -87,5 +88,10 @@ void	free_cmd_lst_lst(cmd_lst_lst_t *llav);
 int	free_all(cmd_lst_lst_t **head);
 
 void expansion_path(char **arg, char *path_var);
+
+int bi_env(data_t *data);
+int bi_exit(data_t *data);
+
+void stop_signal_handler(int signum);
 
 #endif /* SIMPLESHELL_H */
