@@ -16,7 +16,7 @@ int main(int argc, char **argv, char **env)
 	data->alias = sh_get_env(als);
 	/* END TESTS */
 
-	if (argc > 1) //im what cases ac == 2 ?
+	if (argc > 1)
 	{
 		data->mode = FROMFILE;
 		fd = open(argv[1], O_RDONLY);
@@ -60,40 +60,12 @@ int sh_start(data_t *data, int fd)
 
 	while ((ret = sh_getline(&line, fd)) != EOF)
 	{
-		printf("line at sh_start = [%s]\n", line);
-		/* TESTS  
-		cmd_lst_lst_t *llav;
-		cmd_lst_t *node;
-		llav = head;
-		int i = 0, j = 0;;
-		while (llav)
-		{
-			printf("llav_node(%p): [%s]\n", llav, llav->list);
-			node = (llav->head);
-			j = 0;
-			while (node)
-			{
-				printf("node (%d) cmds: [%s] exe: [%d]\n", j, node->cmd, node->exe);
-				node = node->next;
-				++j;
-			}
-			llav = llav->next;
-			++i;
-		}
-		printf("OH\n");
-
-		 END TESTS */
-		
 		if (parser(line, &head) != -1)
 		{
-			printf("Parser passed\n");
 			data->llav_head = head;
 			expansion(data, &head);
-			printf("Expansion passed\n");
 			execute(data, &head);
-			printf("Execute passed\n");
 			free_all(&head);
-			printf("Free_all passed\n");
 		}
 		data->lines++;
 

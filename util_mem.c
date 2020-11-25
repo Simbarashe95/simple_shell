@@ -1,51 +1,57 @@
 #include "simpleshell.h"
 
 /**
- * _realloc - reallocates a memory block
+ * _memcpy - copies memory area
+ * @dest: the memory to write at
+ * @src: the memory to write from
+ * @n: the number of bytes to write
  *
- * @ptr: pointer to the memory previously allocated
- * @old_size: the old size value in bytes of ptr
- * @new_size: the new size value in bytes of ptr
- *
- * Return: a pointer to the newly allocated memory,
- * or NULL if new_size = 0 and ptr != NULL, or on failure
- */
-
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+ * Return: 0 if error else dest
+ **/
+char	*_memcpy(char *dest, char *src, unsigned int n)
 {
-	char *new_ptr;
-	unsigned int i = 0;
+	unsigned int	i = 0;
+
+	while (i < n)
+	{
+		dest[i] = src[i];
+		++i;
+	}
+	return (dest);
+}
+
+/**
+ * _realloc - a function that reallocates a memory block
+ * @ptr: a pointer to the memory previously allocated
+ * @os: the old size in bytes of the allocated ptr
+ * @ns: the new size in bytes of the new memory block
+ *
+ * Return: a pointer to the newly allocated block or NULL
+ **/
+
+void	*_realloc(void *ptr, unsigned int os, unsigned int ns)
+{
+	void	*r;
 
 	if (!ptr)
 	{
-		new_ptr = malloc(new_size);
-		if (!new_ptr)
-			return (NULL);
-		return (new_ptr);
+		r = malloc(ns);
+		return (r ? r : 0);
 	}
-
-	if (new_size == old_size)
+	if (os == ns)
 		return (ptr);
-
-	if (new_size == 0)
+	if (!ns)
 	{
 		free(ptr);
-		return (NULL);
+		return (0);
 	}
-
-	new_ptr = malloc(new_size);
-
-	if (!new_ptr)
-	{
-		free(ptr);
-		return (NULL);
-	}
-
-	while (i < new_size && i < old_size)
-	{
-		((char *)new_ptr)[i] = ((char *)ptr)[i];
-		i++;
-	}
+	r = malloc(ns);
+	if (!r)
+		return (0);
+	if (ns < os)
+		_memcpy(r, ptr, ns);
+	else
+		_memcpy(r, ptr, os);
 	free(ptr);
-	return (new_ptr);
+	return (r);
 }

@@ -1,5 +1,11 @@
 #include "simpleshell.h"
 
+/**
+  * free_av - free list of string
+  * @av: the list
+  *
+  * Return: -1 if error 1 otherwise
+  **/
 int	free_av(char **av)
 {
 	int	i = 0;
@@ -16,6 +22,10 @@ int	free_av(char **av)
 	return (1);
 }
 
+/**
+  * free_cmd_lst - free a lav node
+  * @node: the node
+  **/
 void	free_cmd_lst(cmd_lst_t *node)
 {
 	if (node)
@@ -26,6 +36,10 @@ void	free_cmd_lst(cmd_lst_t *node)
 	}
 }
 
+/**
+  * free_cmd_lst_lst - free a llav node
+  * @llav: the node
+  **/
 void	free_cmd_lst_lst(cmd_lst_lst_t *llav)
 {
 	cmd_lst_t	*node;
@@ -45,6 +59,12 @@ void	free_cmd_lst_lst(cmd_lst_lst_t *llav)
 	}
 }
 
+/**
+  * free_all - free llav
+  * @head: the head of llav list
+  *
+  * Return: -1 if error 1 otherwise
+  **/
 int	free_all(cmd_lst_lst_t **head)
 {
 	cmd_lst_lst_t	*llav;

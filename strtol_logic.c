@@ -1,62 +1,6 @@
 #include "simpleshell.h"
 
 /**
- * _memcpy - copies memory area
- * @dest: the memory to write at
- * @src: the memory to write from
- * @n: the number of bytes to write
- *
- * Return: 0 if error else dest
- **/
-char	*_memcpy(char *dest, char *src, unsigned int n)
-{
-	unsigned int	i = 0;
-
-	while (i < n)
-	{
-		dest[i] = src[i];
-		++i;
-	}
-	return (dest);
-}
-
-/**
- * _realloc - a function that reallocates a memory block
- * @ptr: a pointer to the memory previously allocated
- * @os: the old size in bytes of the allocated ptr
- * @ns: the new size in bytes of the new memory block
- *
- * Return: a pointer to the newly allocated block or NULL
- **/
-/*
-   void	*_realloc(void *ptr, unsigned int os, unsigned int ns)
-   {
-   void	*r;
-
-   if (!ptr)
-   {
-   r = malloc(ns);
-   return (r ? r : 0);
-   }
-   if (os == ns)
-   return (ptr);
-   if (!ns)
-   {
-   free(ptr);
-   return (0);
-   }
-   r = malloc(ns);
-   if (!r)
-   return (0);
-   if (ns < os)
-   _memcpy(r, ptr, ns);
-   else
-   _memcpy(r, ptr, os);
-   free(ptr);
-   return (r);
-   }
- */
-/**
  * _strncpy - copy n char of a source string to dest
  *@src: the source string
  *@dest: the destination string
@@ -80,6 +24,15 @@ char	*_strncpy(char *dest, char *src, int n)
 	return (dest);
 }
 
+/**
+  * stralloc - creates a new lav node and add it
+  * @str: the pointer to the string to copy
+  * @i: the size of the new string
+  * @flag: the delimeter
+  * @llav: the head of llav ll
+  *
+  * Return: -1 if error 1 otherwise
+  **/
 int	stralloc(char *str, int i, char flag, cmd_lst_lst_t *llav)
 {
 	char	*buf;
@@ -94,53 +47,60 @@ int	stralloc(char *str, int i, char flag, cmd_lst_lst_t *llav)
 }
 
 /**
- * strtoav - a function that splits a string into words
- * @str: the string in which to find the words
- * @delim: a string delimeter
+  * free_r - frees r if error
+  * @size: the current size of r
+  * @r: a list of strings
+  **/
+void	free_r(size_t size, char **r)
+{
+	while (size > 0)
+		free(r[--size]);
+	free(r);
+}
+
+/**
+ * strsplit - a function that splits a string at the logical \
+ operator "||" and "&&"
+ * @s: the string in which to find the words
+ * @llav: the head of the llav ll
  *
- * Return: a newly allocated list of words found in str
+ * Return: 0 if error, 1 otherwise
  **/
-int	strsplit(cmd_lst_lst_t *llav, char *str)
+int	strsplit(cmd_lst_lst_t *llav, char *s)
 {
 	char	**r;
 	char	*buf;
-	int	i;
-	size_t	size;
+	int	i = 0;
+	size_t	size = 1;
 	char	flag = 0;
 
-	if (!str || !*str)
+	if (!s || !*s)
 		return (0);
-	size = 1;
 	r = malloc((size) * sizeof(char *));
 	if (!r)
 		return (0);
-	i = 0;
-	while (str[i])
+	while (s[i])
 	{
-		if ((str[i] == '|' && str[i + 1] == '|') || (str[i] == '&' && str[i + 1] == '&'))
+		if ((s[i] == '|' && s[i + 1] == '|') || (s[i] == '&' && s[i + 1] == '&'))
 		{
-			if (stralloc(str, i, flag, llav) == -1)
+			if (stralloc(s, i, flag, llav) == -1)
 			{
-				while (size > 0)
-					free(r[--size]);
-				free(r);
+				free_r(size, r);
 				return (0);
 			}
 			else
 			{
-				flag = (str[i] == '|') ? '|' : '&';
+				flag = (s[i] == '|') ? '|' : '&';
 				++size;
-				str += i + 2;
+				s += i + 2;
 				i = -1;
 			}
 		}
 		++i;
 	}
-	if (stralloc(str, i, flag, llav) == -1)
+	if (stralloc(s, i, flag, llav) == -1)
 	{
-		while (size > 0)
-			free(r[--size]);
-		free(r);
+		free_r(size, r);
 		return (0);
 	}
 	else
@@ -149,17 +109,3 @@ int	strsplit(cmd_lst_lst_t *llav, char *str)
 	return (1);
 }
 
-/*
-   int	main(int ac, char **av)
-   {
-   char	**r;
-
-   r = strsplit(av[1]);
-   while (*r)
-   {
-   printf("%s\n", *r);
-   ++r;
-   }
-   return (0);
-   }
- */

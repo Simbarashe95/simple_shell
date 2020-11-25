@@ -37,6 +37,7 @@ int	wrdcnt(char *str, const char *delim)
  * @ri: the address of the pointer to the string
  * @str: the string in which to find the word
  * @len: the lenght of the word
+ * @delim: the delimeter list
  *
  * Return: 0 if error, 1 otherwise
  **/
@@ -97,18 +98,3 @@ char	**strtoav(char *str, const char *delim)
 	return (r);
 }
 
-
-/**
-int	main(int ac, char **av)
-{
-	char	**r;
-
-	r = strtoav(av[1], av[2]);
-	while (*r)
-	{
-		printf("%s\n", *r);
-		++r;
-		}
-	return (0);
-}
-**/

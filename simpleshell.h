@@ -12,6 +12,15 @@
 #define NONINTERACTIVE 1
 #define FROMFILE 2
 
+/**
+  * struct cmd_lst_s - the list of logic op cutted cmd
+  * @cmd: the logic op cutted cmd
+  * @av: the whitespace cutted cmd
+  * @exe: a boolean to know if this command was executed or not
+  * @flag: the logical operator delimeter of this cmd
+  * @next: the next elem in the ll
+  * @prev: the previous elem in the ll
+  **/
 typedef struct			cmd_lst_s
 {
 	char			*cmd;
@@ -22,6 +31,12 @@ typedef struct			cmd_lst_s
 	struct cmd_lst_s	*prev;
 }				cmd_lst_t;
 
+/**
+  * struct cmd_lst_lst_s - the list of control op cutted list of cmd
+  * @list: the former string
+  * @head: the first elem of it's cmd_lst_s ll
+  * @next: the next elem in the ll
+  **/
 typedef struct	cmd_lst_lst_s
 {
 		char			*list;
@@ -39,7 +54,6 @@ int	strsplit(cmd_lst_lst_t *llav, char *str);
  * @mode: interactive, non interactive or from file
  * @bash: the argv[0]
  */
-
 typedef struct data_s
 {
 	char **env;
@@ -55,7 +69,10 @@ int sh_start(data_t *data, int fd);
 
 /* SH_GETLINE  */
 int sh_getline(char **line, int fd);
-const char *_strchr(const char *str, char c);	
+const char *_strchr(const char *str, char c);
+
+/* PARSER */
+int	parser(char *input, cmd_lst_lst_t **llav_head);
 
 /* UTIL_DATA */
 data_t *sh_data_new(char **argv, char **env);
