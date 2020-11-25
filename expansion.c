@@ -22,6 +22,8 @@ int expansion(data_t *data, cmd_lst_lst_t **head)
 		j = 0;
 		while (node)
 		{
+			if (!node->av[0])
+				return (-1);
 			path_var = sh_get_env_var("PATH", data->env);
 			expansion_var_alias(node->av, data);
 			if (_strchr(node->av[0], '.') == NULL)

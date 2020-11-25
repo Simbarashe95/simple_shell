@@ -41,6 +41,7 @@ int bi_exit(data_t *data)
 		status = _atoi(data->llav_head->head->av[1]);
 
 	free_all(&data->llav_head);
+	free(*data->line);
 	sh_data_delete(data);
 
 	exit(status);
