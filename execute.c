@@ -1,25 +1,49 @@
 #include "simpleshell.h"
 
 /**
-  * do_builtin - function that executes the cmd using builtins
-  * @data: the data struct
-  * @node: the lav node to execute
-  *
-  * Return: -1 if error 0 otherwise
-  **/
+ * is_builtin - function that search if it's builtin
+ *
+ * @arg: the name of the cmd
+ *
+ * Return: 1 if it's builtin, 0 otherwise
+ **/
+
+int is_builtin(char *arg)
+{
+	char *names[] = {"cd", "env", "exit", NULL};
+	int i = 0;
+
+	while (names[i])
+	{
+		if (!_strcmp(names[i], arg))
+		{
+			return (1);
+		}
+		++i;
+	}
+	return (0);
+}
+
+/**
+ * do_builtin - function that executes the cmd using builtins
+ *
+ * @data: the data struct
+ * @node: the lav node to execute
+ *
+ * Return: -1 if error 0 otherwise
+ **/
+
 int	do_builtin(data_t *data, cmd_lst_t *node)
 {
-	char	*names[] = {"cd", "env", "exit", NULL};
-	int	(*func_p[])(data_t *data) = {NULL, bi_env, bi_exit};
+	char	*names[] = {"env", "exit", NULL};
 	int	i = 0;
-
+	int	(*func_p[])(data_t*) = {bi_env, bi_exit, NULL};
 
 	while (names[i])
 	{
 		if (!_strcmp(names[i], node->av[0]))
 		{
-			func_p[i](data);
-			return (0);
+			return (func_p[i](data));
 		}
 		++i;
 	}
@@ -27,12 +51,12 @@ int	do_builtin(data_t *data, cmd_lst_t *node)
 }
 
 /**
-  * do_execve - function that executes the cmd with execve
-  * @data: the data structure
-  * @node: the lav node to execute
-  *
-  * Return: 0
-  **/
+ * do_execve - function that executes the cmd with execve
+ * @data: the data structure
+ * @node: the lav node to execute
+ *
+ * Return: 0
+ **/
 int	do_execve(data_t *data, cmd_lst_t *node)
 {
 	pid_t		c;
@@ -50,12 +74,12 @@ int	do_execve(data_t *data, cmd_lst_t *node)
 }
 
 /**
-  * execute - function that executes the cmds
-  * @data: the data structure
-  * @head: the head of llav linked list
-  *
-  * Return: -1 if error 0 otherwise
-  **/
+ * execute - function that executes the cmds
+ * @data: the data structure
+ * @head: the head of llav linked list
+ *
+ * Return: -1 if error 0 otherwise
+ **/
 int	execute(data_t *data, cmd_lst_lst_t **head)
 {
 	cmd_lst_lst_t	*llav_node;
@@ -69,10 +93,6 @@ int	execute(data_t *data, cmd_lst_lst_t **head)
 		{
 			if (!node->av[0])
 				return (-1);
-<<<<<<< HEAD
-=======
-			printf("av[0] = [%s]\n", node->av[0]);
->>>>>>> fcaa80f17cf5f9752954abff6db2369a207ac9a5
 			if (_strchr(node->av[0], '/'))
 			{
 				if (!node->flag)

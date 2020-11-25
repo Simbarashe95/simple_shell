@@ -69,7 +69,6 @@ void	free_r(size_t size, char **r)
 int	strsplit(cmd_lst_lst_t *llav, char *s)
 {
 	char	**r;
-	char	*buf;
 	int	i = 0;
 	size_t	size = 1;
 	char	flag = 0;

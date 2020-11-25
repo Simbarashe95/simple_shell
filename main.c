@@ -14,12 +14,6 @@ int main(int argc, char **argv, char **env)
 	int fd;
 
 	data = sh_data_new(argv, env);
-
-	/* START TESTS */
-	char *als[] = {"coucou=/bin/ls", "test=yeah", "bonjour=tutu", "foo=bar"};
-
-	data->alias = sh_get_env(als);
-	/* END TESTS */
 	if (argc > 1)
 	{
 		data->mode = FROMFILE;
@@ -42,6 +36,12 @@ int main(int argc, char **argv, char **env)
 	sh_data_delete(data);
 	return (EXIT_SUCCESS);
 }
+
+/**
+ * stop_signal_handler - the command to execute on Ctrl+C
+ *
+ * @signum: the value of the signal
+ */
 
 void stop_signal_handler(int signum)
 {

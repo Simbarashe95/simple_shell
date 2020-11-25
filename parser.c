@@ -76,15 +76,12 @@ int	add_cmd_lst_lst(char *list, cmd_lst_lst_t **head)
 int	parse_logic_op(cmd_lst_lst_t **llav_head)
 {
 	cmd_lst_lst_t	*node;
-	char		*list;
-	int		i;
 
 	if (!llav_head)
 		return (-1);
 	node = *llav_head;
 	while (node)
 	{
-		list = node->list;
 		strsplit(node, node->list);
 		node = node->next;
 	}

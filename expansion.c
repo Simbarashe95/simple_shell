@@ -4,6 +4,7 @@
  * expansion - handles all expansions and replacement functions
  *
  * @data: the data_t structure
+ * @head: the cmd_lst_lst head
  *
  * Return: an int
  */

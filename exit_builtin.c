@@ -36,7 +36,7 @@ int bi_exit(data_t *data)
 {
 	int status = 0;
 	char *av1 = data->llav_head->head->av[1];
-	
+
 	if (av1)
 		status = _atoi(data->llav_head->head->av[1]);
 

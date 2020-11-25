@@ -29,7 +29,7 @@ int _isgraph(char c)
 
 int _strncmp(char *s1, char *s2, int n)
 {
-	int i;		
+	int i;
 
 	i = 0;
 	if (n == 0)
@@ -59,7 +59,7 @@ char	*parse_env_var(char *s, char **env)
 	if (s[i] == '$')
 	{
 		len += 1;
-		while (s[len] && _isgraph (s[len]) && s[len] != '$')
+		while (s[len] && _isgraph(s[len]) && s[len] != '$')
 			len++;
 		name = _strndup(s + 1, len - 1);
 		content = sh_get_env_var(name, env);
@@ -92,7 +92,7 @@ char *expansion_alias(char *var, char **als)
 			if (als[i][len] == '=' && als[i][len + 1])
 			{
 				new = _strdup(als[i] + len + 1);
-				break ;
+				break;
 			}
 		}
 		i++;

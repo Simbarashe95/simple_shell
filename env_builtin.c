@@ -4,12 +4,13 @@
  * bi_env - env builtin
  *
  * @data: the data_t struct
+ *
+ * Return: 0
  */
 
 int bi_env(data_t *data)
 {
 	int i = 0;
-	printf("ENV builtin \n");
 
 	while (data && data->env && data->env[i])
 	{

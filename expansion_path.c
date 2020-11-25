@@ -4,7 +4,7 @@
  * expansion_path - search is the first argument is an executable in the PATH
  *
  * @arg: the first argument
- * @env: the environment variable
+ * @path_var: the PATH environment variable
  */
 
 void expansion_path(char **arg, char *path_var)
@@ -17,9 +17,8 @@ void expansion_path(char **arg, char *path_var)
 	if (is_builtin(tmp))
 	{
 		free(tmp);
-		return ;
+		return;
 	}
-
 	path = strtoav(path_var, ":");
 	while (path && path[i])
 	{
@@ -28,16 +27,10 @@ void expansion_path(char **arg, char *path_var)
 		if (path[i][_strlen(path[i]) - 1] != '/')
 			path[i] = c_concat(path[i], '/');
 		bin_path = str_concat(path[i], tmp);
-
 		if (lstat(bin_path, &stats) == -1)
 			free(bin_path);
 		else
 		{
-			/* i++;
-			while (path && path[i])
-				free(path[i++]);
-			if (path)
-				free(path); */
 			if (stats.st_mode & S_IFREG)
 			{
 				if (stats.st_mode & S_IXUSR)
@@ -45,7 +38,7 @@ void expansion_path(char **arg, char *path_var)
 					tmp = NULL;
 					*arg = _strdup(bin_path);
 					free(bin_path);
-					return ;
+					return;
 				}
 				else
 					printf("HANDLE PERMISSION ERROR\n");
