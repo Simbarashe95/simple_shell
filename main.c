@@ -2,6 +2,10 @@
 
 /**
  * main - entry point of our shell
+ * @argc: the number of arguments to main
+ * @argv: the list of arguments
+ * @env: the environement
+ * Return: always 0
  */
 
 int main(int argc, char **argv, char **env)
@@ -13,9 +17,9 @@ int main(int argc, char **argv, char **env)
 
 	/* START TESTS */
 	char *als[] = {"coucou=/bin/ls", "test=yeah", "bonjour=tutu", "foo=bar"};
+
 	data->alias = sh_get_env(als);
 	/* END TESTS */
-
 	if (argc > 1)
 	{
 		data->mode = FROMFILE;

@@ -2,6 +2,10 @@
 
 /**
  * sh_getline - getline
+ * @line: the address where to store the line
+ * @fd: the filde to read from
+ *
+  * Return: 1, -2 or EOF
  */
 
 int sh_getline(char **line, int fd)

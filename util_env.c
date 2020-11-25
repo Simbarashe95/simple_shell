@@ -28,7 +28,7 @@ char **sh_get_env(char **env)
 }
 
 /**
- * sh_delet_env - deletes the env array
+ * sh_delete_env - deletes the env array
  *
  * @env: the env array
  */

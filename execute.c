@@ -1,10 +1,18 @@
 #include "simpleshell.h"
 
+/**
+  * do_builtin - function that executes the cmd using builtins
+  * @data: the data struct
+  * @node: the lav node to execute
+  *
+  * Return: -1 if error 0 otherwise
+  **/
 int	do_builtin(data_t *data, cmd_lst_t *node)
 {
 	char	*names[] = {"cd", NULL};
-	int	(*func_p[])() = {};
 	int	i = 0;
+
+	int	(*func_p[])(data_t *data) = {cd};
 
 	while (names[i])
 	{
@@ -17,6 +25,13 @@ int	do_builtin(data_t *data, cmd_lst_t *node)
 	return (0);
 }
 
+/**
+  * do_execve - function that executes the cmd with execve
+  * @data: the data structure
+  * @node: the lav node to execute
+  *
+  * Return: 0
+  **/
 int	do_execve(data_t *data, cmd_lst_t *node)
 {
 	pid_t		c;
@@ -33,25 +48,33 @@ int	do_execve(data_t *data, cmd_lst_t *node)
 	return (0);
 }
 
+/**
+  * execute - function that executes the cmds
+  * @data: the data structure
+  * @head: the head of llav linked list
+  *
+  * Return: -1 if error 0 otherwise
+  **/
 int	execute(data_t *data, cmd_lst_lst_t **head)
 {
 	cmd_lst_lst_t	*llav_node;
 	cmd_lst_t	*node;
 
 	llav_node = *head;
-	//printf("WE got to execute\n");
 	while (llav_node)
 	{
-		//printf("In execute llav_node->list = [%s]\n", llav_node->list);
 		node = llav_node->head;
 		while (node)
 		{
 			if (!node->av[0])
 				return (-1);
-			//printf("av[0] = [%s]\n", node->av[0]);
 			if (_strchr(node->av[0], '/'))
 			{
-				if (!(node->flag) || (node->flag == '&' && node->prev && node->prev->exe == 1) || (node->flag == '|' && node->prev && node->prev->exe == 0))
+				if (!node->flag)
+					do_execve(data, node);
+				else if ((node->flag == '&' && node->prev && node->prev->exe== 1))
+					do_execve(data, node);
+				else if ((node->flag == '|' && node->prev && node->prev->exe== 0))
 					do_execve(data, node);
 			}
 			else
