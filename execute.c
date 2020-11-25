@@ -72,9 +72,9 @@ int	execute(data_t *data, cmd_lst_lst_t **head)
 			{
 				if (!node->flag)
 					do_execve(data, node);
-				else if ((node->flag == '&' && node->prev && node->prev->exe== 1))
+				else if ((node->flag == '&' && node->prev && node->prev->exe == 1))
 					do_execve(data, node);
-				else if ((node->flag == '|' && node->prev && node->prev->exe== 0))
+				else if ((node->flag == '|' && node->prev && node->prev->exe == 0))
 					do_execve(data, node);
 			}
 			else
