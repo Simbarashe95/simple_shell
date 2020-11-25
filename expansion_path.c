@@ -35,8 +35,9 @@ void expansion_path(char **arg, char *path_var)
 			{
 				if (stats.st_mode & S_IXUSR)
 				{
-					tmp = NULL;
+					tmp = *arg;
 					*arg = _strdup(bin_path);
+					free(tmp);
 					free(bin_path);
 					return;
 				}

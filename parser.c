@@ -108,6 +108,7 @@ int	parse_ctrl_op(char *input, cmd_lst_lst_t **head)
 		add_cmd_lst_lst(lists[i], head);
 		++i;
 	}
+	free(lists);
 	return (1);
 }
 

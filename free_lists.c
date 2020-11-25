@@ -12,8 +12,10 @@ int	free_av(char **av)
 
 	if (!av)
 		return (-1);
+	printf("free_av av (%p) *av (%p)\n", av, *av);
 	while (av[i])
 	{
+		printf("free_av av[%d] = (%p)\n", i, av[i]);
 		free(av[i]);
 		++i;
 	}
@@ -73,6 +75,7 @@ int	free_all(cmd_lst_lst_t **head)
 	if (!head)
 		return (-1);
 	llav = *head;
+	printf("free_all head (%p)\n", *head);
 	while (llav)
 	{
 		buf = llav;

@@ -111,6 +111,7 @@ void expansion_var_alias(char **av, data_t *data)
 {
 	int i = 0, j;
 	char *new = NULL, *content = NULL;
+	char	*buf;
 
 	while (av[i])
 	{
@@ -134,7 +135,9 @@ void expansion_var_alias(char **av, data_t *data)
 				j++;
 			}
 		}
+		buf = av[i];
 		av[i] = _strdup(new);
+		free(buf);
 		free(new);
 		new = NULL;
 		i++;

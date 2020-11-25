@@ -75,7 +75,7 @@ char	**strtoav(char *str, const char *delim)
 	wrdnb = wrdcnt(str, delim);
 	if (!wrdnb)
 		return (0);
-	r = malloc((wrdnb + 1) * sizeof(char *));
+	r = (char **)malloc((wrdnb + 1) * sizeof(char *));
 	if (!r)
 		return (0);
 	r[wrdnb] = 0;

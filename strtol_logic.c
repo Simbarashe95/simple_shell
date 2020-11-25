@@ -68,25 +68,18 @@ void	free_r(size_t size, char **r)
  **/
 int	strsplit(cmd_lst_lst_t *llav, char *s)
 {
-	char	**r;
 	int	i = 0;
 	size_t	size = 1;
 	char	flag = 0;
 
 	if (!s || !*s)
 		return (0);
-	r = malloc((size) * sizeof(char *));
-	if (!r)
-		return (0);
 	while (s[i])
 	{
 		if ((s[i] == '|' && s[i + 1] == '|') || (s[i] == '&' && s[i + 1] == '&'))
 		{
 			if (stralloc(s, i, flag, llav) == -1)
-			{
-				free_r(size, r);
 				return (0);
-			}
 			else
 			{
 				flag = (s[i] == '|') ? '|' : '&';
@@ -98,13 +91,7 @@ int	strsplit(cmd_lst_lst_t *llav, char *s)
 		++i;
 	}
 	if (stralloc(s, i, flag, llav) == -1)
-	{
-		free_r(size, r);
 		return (0);
-	}
-	else
-		++size;
-	r[size - 1] = NULL;
 	return (1);
 }
 
