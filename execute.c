@@ -9,20 +9,21 @@
   **/
 int	do_builtin(data_t *data, cmd_lst_t *node)
 {
-	char	*names[] = {"cd", NULL};
+	char	*names[] = {"cd", "env", "exit", NULL};
+	int	(*func_p[])(data_t *data) = {NULL, bi_env, bi_exit};
 	int	i = 0;
 
-	int	(*func_p[])(data_t *data) = {cd};
 
 	while (names[i])
 	{
 		if (!_strcmp(names[i], node->av[0]))
-			func_p[i]();
-		else
-			return (-1);
+		{
+			func_p[i](data);
+			return (0);
+		}
 		++i;
 	}
-	return (0);
+	return (-1);
 }
 
 /**
@@ -68,6 +69,10 @@ int	execute(data_t *data, cmd_lst_lst_t **head)
 		{
 			if (!node->av[0])
 				return (-1);
+<<<<<<< HEAD
+=======
+			printf("av[0] = [%s]\n", node->av[0]);
+>>>>>>> fcaa80f17cf5f9752954abff6db2369a207ac9a5
 			if (_strchr(node->av[0], '/'))
 			{
 				if (!node->flag)
