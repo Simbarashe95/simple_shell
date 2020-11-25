@@ -88,7 +88,6 @@ int sh_start(data_t *data, int fd)
 		free(line);
 	if (data->mode == FROMFILE)
 		close(fd);
-	_puts("See you soon <3\n");
 	return (EXIT_SUCCESS);
 }
 
