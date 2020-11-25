@@ -74,7 +74,6 @@ int sh_start(data_t *data, int fd)
 		if (parser(line, &head) != -1)
 		{
 			data->llav_head = head;
-			printf("sh_start head (%p)\n", head);
 			expansion(data, &head);
 			execute(data, &head);
 			free_all(&head);
