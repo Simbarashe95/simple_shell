@@ -65,14 +65,14 @@ const char	*_strchr(const char *s, char c)
 {
 	if (!s)
 		return (0);
+	if (c == 0)
+		return (0);
 	while (*s)
 	{
 		if (*s == c)
 			return (s);
 		++s;
 	}
-	if (c == 0)
-		return (s);
 	return (0);
 }
 
