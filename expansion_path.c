@@ -1,6 +1,21 @@
 #include "simpleshell.h"
 
 /**
+ * free_path - free the path
+ *
+ * @path: the path
+ */
+
+void free_path(char **path, int i)
+{
+	while (path && path[i + 1])
+	{
+		free(path[i + 1]);
+		i++;
+	}
+}
+
+/**
  * expansion_path - search is the first argument is an executable in the PATH
  *
  * @arg: the first argument
@@ -31,6 +46,8 @@ void expansion_path(char **arg, char *path_var)
 			free(bin_path);
 		else
 		{
+			free_path(path, i);
+			free(path);
 			if (stats.st_mode & S_IFREG)
 			{
 				if (stats.st_mode & S_IXUSR)
@@ -45,5 +62,5 @@ void expansion_path(char **arg, char *path_var)
 		}
 		i++;
 	}
-	free(path_var);
+	free(path);
 }

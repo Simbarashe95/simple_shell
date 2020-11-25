@@ -16,10 +16,9 @@ int sh_getline(char **line, int fd)
 	*line = malloc(sizeof(char) * 1);
 	while ((ret = read(fd, &c, 1)) > 0)
 	{
-		*(*line + pos) = (c == '\n') ? '\0' : c;
-		if (*(*line + pos) == '\0')
+		*(*line + pos++) = (c == '\n') ? '\0' : c;
+		if (*(*line + pos - 1) == '\0')
 			return (1);
-		pos++;
 		if (pos >= buf_size)
 		{
 			*line = _realloc(*line, buf_size, buf_size + 1);
