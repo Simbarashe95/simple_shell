@@ -17,7 +17,6 @@ int expansion(data_t *data, cmd_lst_lst_t **head)
 
 	while (llav_head)
 	{
-		printf("llav_node(%d): [%s]\n", i, llav_head->list);
 		node = (llav_head->head);
 		j = 0;
 		while (node)
@@ -25,8 +24,6 @@ int expansion(data_t *data, cmd_lst_lst_t **head)
 			expansion_var_alias(node->av, data);
 			if (_strchr(node->av[0], '.') == NULL)
 				expansion_path(&node->av[0], sh_get_env_var("PATH", data->env));
-			printf("node->av[0] = [%s]\n", node->av[0]);
-			printf("node (%d) cmds: [%s] exe: [%d]\n", j, node->cmd, node->exe);
 			node = node->next;
 			++j;
 		}

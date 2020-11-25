@@ -40,8 +40,6 @@ void expansion_path(char **arg, char *path_var)
 					free(bin_path);
 					return;
 				}
-				else
-					printf("HANDLE PERMISSION ERROR\n");
 			}
 		}
 		i++;
