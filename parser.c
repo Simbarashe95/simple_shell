@@ -143,7 +143,7 @@ int	parser(char *input, cmd_lst_lst_t **llav_head)
 			}
 			node = node->next;
 		}
-		llav_node= llav_node->next;
+		llav_node = llav_node->next;
 	}
 	return (1);
 }
