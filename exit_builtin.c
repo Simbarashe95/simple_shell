@@ -34,11 +34,19 @@ int _atoi(char *s)
 
 int bi_exit(data_t *data)
 {
-	int status = 0;
+	int status = 0, i = 0;
 	char *av1 = data->llav_head->head->av[1];
 
 	if (av1)
+	{
+		while (av1[i])
+		{
+			if (av1[i] < '0' || av1[i] > '9')
+				return (2);
+			i++;
+		}
 		status = _atoi(data->llav_head->head->av[1]);
+	}
 
 	free_all(&data->llav_head);
 	free(*data->line);

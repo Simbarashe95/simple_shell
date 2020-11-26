@@ -10,7 +10,7 @@
 
 int is_builtin(char *arg)
 {
-	char *names[] = {"cd", "env", "exit", NULL};
+	char *names[] = {"env", "exit", "help", NULL};
 	int i = 0;
 
 	while (names[i])
@@ -35,10 +35,10 @@ int is_builtin(char *arg)
 
 int	do_builtin(data_t *data, cmd_lst_t *node)
 {
-	char	*names[] = {"env", "exit", NULL};
+	char	*names[] = {"env", "exit", "help", NULL};
 	int	i = 0;
 
-	int	(*func_p[])(data_t *) = {bi_env, bi_exit, NULL};
+	int	(*func_p[])(data_t *) = {bi_env, bi_exit, bi_help, NULL};
 
 	while (names[i])
 	{

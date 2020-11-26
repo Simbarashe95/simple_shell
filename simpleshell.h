@@ -83,6 +83,7 @@ void stop_signal_handler(int signum);
 /* BUILTINS */
 int bi_env(data_t *data);
 int bi_exit(data_t *data);
+int bi_help(data_t *data);
 
 /* EXECUTE */
 int is_builtin(char *arg);
