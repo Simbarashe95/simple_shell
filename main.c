@@ -20,8 +20,12 @@ int main(int argc, char **argv, char **env)
 		fd = open(argv[1], O_RDONLY);
 		if (fd == -1)
 		{
+			_puts(data->bash);
+			_puts(": 0: Can't open ");
+			_puts(argv[1]);
+			_puts("\n");
 			sh_data_delete(data);
-			return (EXIT_FAILURE);
+			return (127);
 		}
 		sh_start(data, fd);
 	}
